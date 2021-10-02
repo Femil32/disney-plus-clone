@@ -56,6 +56,12 @@ const Container = styled.div`
     padding: 0 calc(2.5vw + 5px);
     overflow-x: hidden;
     max-width: 60vw;
+    @media (max-width: 1024px) {
+        max-width: 70vw;
+    }
+    @media (max-width: 768px) {
+        max-width: 80vw;
+    }
 `
 
 const Background = styled.div`
