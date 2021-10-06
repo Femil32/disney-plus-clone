@@ -1,8 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { auth, provider } from '../firebase'
+import { selectUserName, selectUserEmail, selectUserPhoto } from '../features/user/userSlice'
 
-function header() {
+function header(props) {
+    const handleAuth = () => {
+        auth.signInWithPopup(provider)
+            .then(result => {
+                console.log(result)
+            })
+            .catch(err => console.log(err))
+    }
     return (
         <Nav>
             <Link to='/'>
@@ -34,7 +43,13 @@ function header() {
                     <span>Series</span>
                 </a>
             </Navbar>
-            <UseImg src='https://source.unsplash.com/user/erondu/40x40/' />
+            <Login
+                onClick={() => {
+                    handleAuth()
+                }}
+            >
+                Login
+            </Login>
         </Nav>
     )
 }
@@ -103,9 +118,4 @@ const Navbar = styled.div`
     }
 `
 
-const UseImg = styled.img`
-    border-radius: 50%;
-    border: 1px solid #fff;
-    outline: none;
-    cursor: pointer;
-`
+const Login = styled.button``
