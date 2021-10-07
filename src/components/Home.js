@@ -11,7 +11,6 @@ function Home() {
             let tempMovies = snapshot.docs.map(doc => {
                 return { id: doc.id, ...doc.data() }
             })
-            console.log(tempMovies)
         })
     }, [])
     return (
@@ -28,7 +27,7 @@ export default Home
 const Container = styled.main`
     position: relative;
     min-height: calc(100vh - 70px);
-    padding: 0 calc(2.5vw + 5px);
+    padding: 70px calc(2.5vw + 5px) 40px;
     overflow-x: hidden;
 
     &::before {

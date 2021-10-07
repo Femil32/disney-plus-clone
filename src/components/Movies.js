@@ -27,7 +27,7 @@ function Movies() {
 export default Movies
 
 const Container = styled.div`
-    margin: 40px 0;
+    margin: 40px 0 0;
     h2 {
         margin-bottom: 15px;
     }
