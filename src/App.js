@@ -3,8 +3,9 @@ import Header from './components/Header'
 import Home from './components/Home'
 import './App.css'
 import Detail from './components/Detail'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Login from './components/Login'
+import NotFound from './components/NotFound'
 
 function App() {
     return (
@@ -18,8 +19,11 @@ function App() {
                     <Route path='/login'>
                         <Login />
                     </Route>
-                    <Route path='/'>
+                    <Route exact path='/'>
                         <Home />
+                    </Route>
+                    <Route path='*'>
+                        <NotFound />
                     </Route>
                 </Switch>
             </Router>

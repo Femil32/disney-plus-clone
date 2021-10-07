@@ -1,7 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 
 function Loader() {
+    const state = useSelector(state => state)
+    useEffect(() => {
+        if (state?.user?.loading) {
+            document.body.style.overflow = 'hidden'
+        } else {
+            document.body.style.overflow = 'auto'
+        }
+    }, [state.user.loading])
     return (
         <Loading>
             <img src='/images/loading.svg' alt='loading' />

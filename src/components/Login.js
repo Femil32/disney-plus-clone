@@ -6,7 +6,13 @@ function Login() {
         <Container>
             <LoginContent>
                 <LOGO_ONE src='images/cta-logo-one.svg' alt='' />
-                <LoginBtn>Get all there</LoginBtn>
+                <LoginBtn
+                    onClick={() => {
+                        console.log(333)
+                    }}
+                >
+                    Get all there
+                </LoginBtn>
                 <Description>
                     Get Premier Access to Raya and The Last Dragon for an additional fee with a
                     Disneyplus Subscription.

@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import styled from 'styled-components'
 import Loader from './Loader'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { auth, provider } from '../firebase'
 import { setUserLoginDetails, setSignOutState, setLoading } from '../features/user/userSlice'
 
@@ -12,6 +12,7 @@ const Header = props => {
     const user = useSelector(state => state.user)
 
     const handleAuth = () => {
+        dispatch(setLoading(true))
         if (!user.name) {
             auth.signInWithPopup(provider)
                 .then(result => {
@@ -20,6 +21,12 @@ const Header = props => {
                 .catch(error => {
                     alert(error.message)
                 })
+                .finally(() => {
+                    history.push('/home')
+                    setTimeout(() => {
+                        dispatch(setLoading(false))
+                    }, 3000)
+                })
         } else if (user.name) {
             auth.signOut()
                 .then(() => {
@@ -27,10 +34,14 @@ const Header = props => {
                     history.push('/')
                 })
                 .catch(err => alert(err.message))
+                .finally(() => {
+                    setTimeout(() => {
+                        dispatch(setLoading(false))
+                    }, 2000)
+                })
         }
     }
     const setUser = user => {
-        console.log(user)
         dispatch(
             setUserLoginDetails({
                 name: user.displayName,
@@ -47,7 +58,6 @@ const Header = props => {
     }
 
     useEffect(() => {
-        // setLoading({true})
         auth.onAuthStateChanged(async user => {
             if (user) {
                 setUser(user)
@@ -55,15 +65,17 @@ const Header = props => {
             }
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [history])
+    }, [])
 
     return (
         <>
             {user.loading && <Loader />}
             <Nav>
-                <Logo>
-                    <img src='/images/logo.svg' alt='Disney+' />
-                </Logo>
+                <Link to='/'>
+                    <Logo>
+                        <img src='/images/logo.svg' alt='Disney+' />
+                    </Logo>
+                </Link>
 
                 {!user.name ? (
                     <Login onClick={handleAuth}>Login</Login>
