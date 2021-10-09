@@ -2,9 +2,10 @@ import { useEffect } from 'react'
 import styled from 'styled-components'
 import Loader from './Loader'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useHistory } from 'react-router-dom'
-import { auth, provider } from '../firebase'
+import { useHistory } from 'react-router-dom'
+import db, { auth, provider } from '../firebase'
 import { setUserLoginDetails, setSignOutState, setLoading } from '../features/user/userSlice'
+import Fire from './Fire'
 
 const Header = props => {
     const dispatch = useDispatch()
@@ -22,10 +23,10 @@ const Header = props => {
                     alert(error.message)
                 })
                 .finally(() => {
-                    history.push('/home')
+                    history.push('/')
                     setTimeout(() => {
                         dispatch(setLoading(false))
-                    }, 3000)
+                    }, 1000)
                 })
         } else if (user.name) {
             auth.signOut()
@@ -37,7 +38,7 @@ const Header = props => {
                 .finally(() => {
                     setTimeout(() => {
                         dispatch(setLoading(false))
-                    }, 2000)
+                    }, 1000)
                 })
         }
     }
@@ -61,21 +62,20 @@ const Header = props => {
         auth.onAuthStateChanged(async user => {
             if (user) {
                 setUser(user)
-                history.push('/home')
+                history.push('/')
             }
-        })
+        }, db.collection)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
         <>
             {user.loading && <Loader />}
+            <Fire />
             <Nav>
-                <Link to='/'>
-                    <Logo>
-                        <img src='/images/logo.svg' alt='Disney+' />
-                    </Logo>
-                </Link>
+                <Logo href='/'>
+                    <img src='/images/logo.svg' alt='Disney+' />
+                </Logo>
 
                 {!user.name ? (
                     <Login onClick={handleAuth}>Login</Login>
@@ -208,14 +208,18 @@ const NavMenu = styled.div`
   } */
 `
 
-const Login = styled.a`
+const Login = styled.button`
+    max-width: 100px;
+    width: 100%;
     background-color: rgba(0, 0, 0, 0.6);
-    padding: 8px 16px;
+    padding: 8px 14px;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    border: 1px solid #f9f9f9;
+    border: 2px solid #f9f9f9;
     border-radius: 4px;
     transition: all 0.2s ease 0s;
+    cursor: pointer;
+    color: #fff;
     &:hover {
         background-color: #f9f9f9;
         color: #000;
