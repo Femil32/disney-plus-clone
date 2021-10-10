@@ -7,12 +7,17 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 import Login from './components/Login'
 import NotFound from './components/NotFound'
 import ProductionPage from './components/ProductionPage'
+import { useSelector } from 'react-redux'
+import Loader from './components/Loader'
 
 const productionRoute = ['search', 'watchlist', 'original', 'movie', 'series']
 
 function App() {
+    const user = useSelector(state => state.user)
+    const movie = useSelector(state => state.movie)
     return (
         <div className='App'>
+            {(user.loading || movie.loading) && <Loader />}
             <Router>
                 <Header />
                 <Switch>
@@ -25,11 +30,11 @@ function App() {
                     <Route exact path='/'>
                         <Home />
                     </Route>
-                    <Route exact path='/underproduction'>
+                    <Route path='/underproduction'>
                         <ProductionPage />
                     </Route>
-                    {productionRoute.map(route => (
-                        <Route path={route}>
+                    {productionRoute.map((route, index) => (
+                        <Route key={index} exact path={`/${route}`}>
                             <Redirect to='/underproduction' />
                         </Route>
                     ))}

@@ -45,6 +45,7 @@ function Viewers() {
 export default Viewers
 
 const Container = styled.div`
+    made-by: femil Savaliya;
     margin: 60px 0 0;
     display: grid;
     justify-content: center;
@@ -67,11 +68,14 @@ const Wrap = styled.div`
     transition: all 0.25s;
     cursor: pointer;
     overflow: hidden;
-    @media (max-width: 425px) {
+    @media (max-width: 768px) {
         &:nth-child(1) {
             grid-column: 1/3;
+            grid-row: 2/3;
             align-self: center;
             justify-self: center;
+            width: 100%;
+            height: 90%;
         }
     }
 

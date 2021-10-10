@@ -73,6 +73,15 @@ const Carousel = styled(Slider)`
         }
     }
 
+    @media (max-width: 768px) {
+        .slick-slide {
+            height:200px;
+         }
+         
+         .slick-slide img {
+            height:200px;
+         }
+    }
     @media (max-width: 425px) {
         .slick-slide {
             height:180px;

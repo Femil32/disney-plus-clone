@@ -19,12 +19,13 @@ const Loading = styled.div`
     backdrop-filter: blur(3px);
     width: 100%;
     height: 100vh;
-    z-index: 999;
+    z-index: 1000;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    pointer-events: none;
+    
+
     img {
         width: 200px;
         height: 200px;

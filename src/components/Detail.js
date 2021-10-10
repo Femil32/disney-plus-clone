@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
+import { setLoading } from '../features/movie/movieSlice'
 import db from '../firebase'
 
 const Detail = props => {
     const { id } = useParams()
     const [detailData, setDetailData] = useState({})
+    const dispatch = useDispatch()
 
     useEffect(() => {
+        dispatch(setLoading(true))
         db.collection('movies')
             .doc(id)
             .get()
@@ -21,14 +25,18 @@ const Detail = props => {
             .catch(error => {
                 console.log('Error getting document:', error)
             })
-    }, [id])
+            .finally(() => {
+                setTimeout(() => {
+                    dispatch(setLoading(false))
+                }, 100)
+            })
+    }, [id, dispatch])
 
     return (
         <Container>
             <Background>
                 <img alt={detailData.title} src={detailData.backgroundImg} />
             </Background>
-
             <ImageTitle>
                 <img alt={detailData.title} src={detailData.titleImg} />
             </ImageTitle>
@@ -76,6 +84,15 @@ const Background = styled.div`
     bottom: 0;
     right: 0;
     z-index: -1;
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.3);
+    }
     img {
         width: 100vw;
         @media (max-width: 768px) {
@@ -94,6 +111,7 @@ const ImageTitle = styled.div`
     min-height: 170px;
     padding-bottom: 24px;
     width: 100%;
+
     img {
         max-width: 600px;
         min-width: 200px;

@@ -9,8 +9,8 @@ function Movies({ title, data }) {
             </Title>
             <Content>
                 {data &&
-                    data.map(movie => (
-                        <Wrap key={movie.id}>
+                    data.map((movie,index) => (
+                        <Wrap key={index}>
                             <Link to={`/detail/` + movie.id}>
                                 <img src={movie.cardImg} alt='disney' />
                             </Link>

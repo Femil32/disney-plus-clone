@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
-import Loader from './Loader'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import db, { auth, provider } from '../firebase'
@@ -10,11 +9,11 @@ const Header = props => {
     const dispatch = useDispatch()
     const history = useHistory()
     const user = useSelector(state => state.user)
-    const movie = useSelector(state => state.movie)
     const [showUserProfile, setUserProfile] = useState(false)
     const [mobMenu, setMobMenu] = useState(false)
     const [MobMenuShow, setMobMenuShow] = useState(false)
     const nav = useRef()
+    const node = useRef()
 
     const handleAuth = () => {
         dispatch(setLoading(true))
@@ -30,7 +29,7 @@ const Header = props => {
                     // history.push('/')
                     setTimeout(() => {
                         dispatch(setLoading(false))
-                    }, 1000)
+                    }, 100)
                 })
         } else if (user.name) {
             auth.signOut()
@@ -42,7 +41,7 @@ const Header = props => {
                 .finally(() => {
                     setTimeout(() => {
                         dispatch(setLoading(false))
-                    }, 1000)
+                    }, 100)
                 })
         }
     }
@@ -73,7 +72,7 @@ const Header = props => {
         auth.onAuthStateChanged(async user => {
             if (user) {
                 setUser(user)
-                history.push('/')
+                // history.push('/')
             }
         }, db.collection)
 
@@ -84,11 +83,11 @@ const Header = props => {
             window.removeEventListener('resize', checkWindowWidth)
             checkWindowWidth()
         }
-    }, [history, setUser, mobMenu])
+        // eslint-disable-next-line
+    }, [history, mobMenu, showUserProfile])
 
     return (
         <>
-            {(user.loading || movie.loading) && <Loader />}
             <Nav>
                 <Logo href='/'>
                     <img src='/images/logo.svg' alt='Disney+' />
@@ -100,7 +99,7 @@ const Header = props => {
                     <>
                         <NavMenu ref={nav}>
                             {mobMenu && (
-                                <SignOut>
+                                <SignOut ref={node}>
                                     <img src={user.photo} alt={''} style={style} />
 
                                     {showUserProfile && (
@@ -149,13 +148,7 @@ const Header = props => {
                             {mobMenu && (
                                 <UserDetail>
                                     <p>{user.email}</p>
-                                    <button
-                                        onClick={() => {
-                                            setUserProfile(!showUserProfile)
-                                        }}
-                                    >
-                                        Sign Out
-                                    </button>
+                                    <button onClick={handleAuth}>Sign Out</button>
                                 </UserDetail>
                             )}
                         </NavMenu>
@@ -315,7 +308,7 @@ const NavMenu = styled.div`
         top: 0;
         right: 0;
         height: 100vh;
-        width: 200px;
+        width: 50vw;
         background: rgba(0, 0, 0, 0.6);
         border-radius: 8px 0 0 8px;
         z-index: 999;
