@@ -1,24 +1,21 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-function Movies() {
+function Movies({ title, data }) {
     return (
         <Container>
             <Title>
-                <h2>Recomanded for you</h2>
+                <h2>{title}</h2>
             </Title>
             <Content>
-                <Wrap>
-                    <img src='https://source.unsplash.com/1000x500/?nature,water' alt='disney' />
-                </Wrap>
-                <Wrap>
-                    <img src='https://source.unsplash.com/1000x500/?nature,water' alt='disney' />
-                </Wrap>
-                <Wrap>
-                    <img src='https://source.unsplash.com/1000x500/?nature,water' alt='disney' />
-                </Wrap>
-                <Wrap>
-                    <img src='https://source.unsplash.com/1000x500/?nature,water' alt='disney' />
-                </Wrap>
+                {data &&
+                    data.map(movie => (
+                        <Wrap key={movie.id}>
+                            <Link to={`/detail/` + movie.id}>
+                                <img src={movie.cardImg} alt='disney' />
+                            </Link>
+                        </Wrap>
+                    ))}
             </Content>
         </Container>
     )
@@ -41,6 +38,11 @@ const Content = styled.div`
     display: grid;
     column-gap: 2rem;
     grid-template-columns: repeat(4, minmax(0, 1fr));
+    @media (max-width: 768px) {
+        column-gap: 1rem;
+        row-gap: 1rem;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 `
 const Wrap = styled.div`
     border: 1px solid rgba(249, 249, 249, 0.1);

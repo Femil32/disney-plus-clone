@@ -29,7 +29,6 @@ const userSlice = createSlice({
         },
     },
 })
-console.log(userSlice)
 
 export const { setUserLoginDetails, setSignOutState, setLoading } = userSlice.actions
 

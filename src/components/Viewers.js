@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 function Viewers() {
@@ -6,7 +6,6 @@ function Viewers() {
         <Container>
             <Wrap>
                 <img src='/images/viewers-disney.png' alt='disney' />
-
                 <video autoPlay={true} loop={true} playsInline={true}>
                     <source src='/videos/disney.mp4' type='video/mp4' />
                 </video>
@@ -48,8 +47,16 @@ export default Viewers
 const Container = styled.div`
     margin: 60px 0 0;
     display: grid;
+    justify-content: center;
+    align-content: center;
     column-gap: 2rem;
     grid-template-columns: repeat(5, minmax(0, 1fr));
+    @media (max-width: 768px) {
+        column-gap: 1rem;
+        row-gap: 1rem;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        place-items: center;
+    }
 `
 
 const Wrap = styled.div`
@@ -60,6 +67,13 @@ const Wrap = styled.div`
     transition: all 0.25s;
     cursor: pointer;
     overflow: hidden;
+    @media (max-width: 425px) {
+        &:nth-child(1) {
+            grid-column: 1/3;
+            align-self: center;
+            justify-self: center;
+        }
+    }
 
     &:hover {
         transform: scale(1.03);
