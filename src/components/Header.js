@@ -13,7 +13,7 @@ const Header = props => {
     const movie = useSelector(state => state.movie)
     const [showUserProfile, setUserProfile] = useState(false)
     const [mobMenu, setMobMenu] = useState(false)
-    const [showMobNav, setMobNav] = useState(false)
+    const [MobMenuShow, setMobMenuShow] = useState(false)
     const nav = useRef()
 
     const handleAuth = () => {
@@ -27,7 +27,7 @@ const Header = props => {
                     alert(error.message)
                 })
                 .finally(() => {
-                    history.push('/')
+                    // history.push('/')
                     setTimeout(() => {
                         dispatch(setLoading(false))
                     }, 1000)
@@ -36,7 +36,7 @@ const Header = props => {
             auth.signOut()
                 .then(() => {
                     dispatch(setSignOutState())
-                    history.push('/')
+                    // history.push('/')
                 })
                 .catch(err => alert(err.message))
                 .finally(() => {
@@ -112,7 +112,8 @@ const Header = props => {
                                     {mobMenu && (
                                         <Menu
                                             onClick={() => {
-                                                setMobNav(false)
+                                                setMobMenuShow(false)
+                                                nav.current.style.transform = 'translateX(100%)'
                                             }}
                                         >
                                             <img src='/images/close.svg' alt='menu' />
@@ -121,27 +122,27 @@ const Header = props => {
                                 </SignOut>
                             )}
 
-                            <a href='/home'>
+                            <a href='/'>
                                 <img src='/images/home-icon.svg' alt='HOME' />
                                 <span>HOME</span>
                             </a>
-                            <a href='/home'>
+                            <a href='/search'>
                                 <img src='/images/search-icon.svg' alt='SEARCH' />
                                 <span>SEARCH</span>
                             </a>
-                            <a href='/home'>
+                            <a href='/watchlist'>
                                 <img src='/images/watchlist-icon.svg' alt='WATCHLIST' />
                                 <span>WATCHLIST</span>
                             </a>
-                            <a href='/home'>
+                            <a href='/original'>
                                 <img src='/images/original-icon.svg' alt='ORIGINALS' />
                                 <span>ORIGINALS</span>
                             </a>
-                            <a href='/home'>
+                            <a href='/movie'>
                                 <img src='/images/movie-icon.svg' alt='MOVIES' />
                                 <span>MOVIES</span>
                             </a>
-                            <a href='/home'>
+                            <a href='/series'>
                                 <img src='/images/series-icon.svg' alt='SERIES' />
                                 <span>SERIES</span>
                             </a>
@@ -158,7 +159,7 @@ const Header = props => {
                                 </UserDetail>
                             )}
                         </NavMenu>
-                        {!showMobNav && (
+                        {!MobMenuShow && (
                             <SignOut>
                                 <img
                                     src={user.photo}
@@ -178,8 +179,8 @@ const Header = props => {
                                 {mobMenu && (
                                     <Menu
                                         onClick={() => {
-                                            setMobNav(true)
-                                            nav.current.transform ='transformX(0)'
+                                            setMobMenuShow(true)
+                                            nav.current.style.transform = 'translateX(0)'
                                         }}
                                     >
                                         <img src='/images/menu.svg' alt='menu' />
@@ -207,7 +208,7 @@ const Nav = styled.nav`
     letter-spacing: 16px;
     z-index: 3;
     padding: 0 36px;
-    @media (max-width: 425px) {
+    @media (max-width: 768px) {
         padding: 0 16px;
     }
 `
@@ -261,6 +262,7 @@ const NavMenu = styled.div`
     position: relative;
     margin-right: auto;
     margin-left: 25px;
+    transition: transform 0.25s linear;
     a {
         display: flex;
         align-items: center;
