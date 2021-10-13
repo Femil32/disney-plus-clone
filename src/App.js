@@ -35,7 +35,7 @@ function App() {
                     </Route>
                     {productionRoute.map((route, index) => (
                         <Route key={index} exact path={`/${route}`}>
-                            <Redirect to='/underproduction' />
+                            <ProductionPage />
                         </Route>
                     ))}
 

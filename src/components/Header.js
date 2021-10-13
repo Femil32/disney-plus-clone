@@ -35,6 +35,7 @@ const Header = props => {
             auth.signOut()
                 .then(() => {
                     dispatch(setSignOutState())
+                    indexedDB.deleteDatabase('firebaseLocalStorageDb')
                     // history.push('/')
                 })
                 .catch(err => alert(err.message))

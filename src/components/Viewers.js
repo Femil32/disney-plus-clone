@@ -96,8 +96,11 @@ const Wrap = styled.div`
     video {
         transition: all 250ms linear;
         position: absolute;
+        width: 100%;
         top: 0;
         left: 0;
+        bottom: 0;
+        right: 0;
         z-index: -1;
         pointer-events: none;
         display: none;

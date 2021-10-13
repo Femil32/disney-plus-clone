@@ -42,14 +42,16 @@ const Detail = props => {
             </ImageTitle>
             <ContentMeta>
                 <Controls>
-                    <Player>
-                        <img src='/images/play-icon-black.png' alt='' />
-                        <span>Play</span>
-                    </Player>
-                    <Trailer>
-                        <img src='/images/play-icon-white.png' alt='' />
-                        <span>Trailer</span>
-                    </Trailer>
+                    <BtnGroup>
+                        <Player>
+                            <img src='/images/play-icon-black.png' alt='' />
+                            <span>Play</span>
+                        </Player>
+                        <Trailer>
+                            <img src='/images/play-icon-white.png' alt='' />
+                            <span>Trailer</span>
+                        </Trailer>
+                    </BtnGroup>
                     <AddList>
                         <span />
                         <span />
@@ -75,6 +77,9 @@ const Container = styled.div`
     display: block;
     top: 70px;
     padding: 0 calc(3.5vw + 5px);
+    @media (max-width: 768px) {
+        top: 75px;
+    }
 `
 
 const Background = styled.div`
@@ -96,7 +101,10 @@ const Background = styled.div`
     img {
         width: 100vw;
         @media (max-width: 768px) {
-            width: initial;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: 0 70px;
         }
     }
 `
@@ -116,6 +124,10 @@ const ImageTitle = styled.div`
         max-width: 600px;
         min-width: 200px;
         width: 35vw;
+        @media (max-width: 768px) {
+            max-width: 300px;
+            min-width: 135px;
+        }
     }
 `
 
@@ -129,6 +141,10 @@ const Controls = styled.div`
     flex-flow: row nowrap;
     margin: 24px 0px;
     min-height: 56px;
+
+    @media (max-width: 768px) {
+        flex-wrap: wrap;
+    }
 `
 
 const Player = styled.button`
@@ -168,6 +184,23 @@ const Trailer = styled(Player)`
     background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgb(249, 249, 249);
     color: rgb(249, 249, 249);
+`
+const BtnGroup = styled.div`
+    align-items: center;
+    display: flex;
+    flex-flow: row nowrap;
+    @media (max-width: 768px) {
+        width: 100%;
+        display: grid;
+        place-items: center;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-bottom: 10px;
+        ${Player} {
+            margin: 0;
+            width: 100%;
+        }
+    }
 `
 
 const AddList = styled.div`
